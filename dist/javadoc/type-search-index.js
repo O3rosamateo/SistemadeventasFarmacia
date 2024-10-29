@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ControladorBS","l":"CBSLogin"},{"p":"Froms","l":"CentrodeControl"},{"p":"Conexion","l":"conexion"},{"p":"Froms","l":"Login"},{"p":"Aplicacion","l":"LOGIN"},{"p":"Froms","l":"Pruebadeconexion"}];updateSearchResults();
