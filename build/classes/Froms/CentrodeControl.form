@@ -186,7 +186,7 @@
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="250" width="810" height="490"/>
+          <AbsoluteConstraints x="20" y="250" width="810" height="490"/>
         </Constraint>
       </Constraints>
 
@@ -271,21 +271,21 @@
                               <EmptySpace pref="16" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel9" min="-2" pref="82" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="txtTotalPVenta" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtDireccionClienteVenta" min="-2" pref="7" max="-2" attributes="0"/>
+                                          <Component id="btnImpriBoletaVenta" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtTotalPVenta" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtDireccionClienteVenta" min="-2" pref="7" max="-2" attributes="0"/>
-                                  <Component id="btnImpriBoletaVenta" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -330,7 +330,7 @@
                               <Component id="txtDireccionClienteVenta" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnImpriBoletaVenta" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="txtTotalPVenta" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel9" min="-2" pref="30" max="-2" attributes="0"/>
@@ -340,7 +340,7 @@
                               <Component id="jScrollPane1" min="-2" pref="342" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="34" max="32767" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -723,11 +723,14 @@
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnActualizarProveedor" max="32767" attributes="0"/>
-                                  <Component id="btnNuevoProveedor" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnEliminarProveedor" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnGuardarProveedor" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnActualizarProveedor" max="32767" attributes="0"/>
+                                      <Component id="btnNuevoProveedor" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnEliminarProveedor" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnGuardarProveedor" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtIdProveedor" min="-2" pref="5" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jScrollPane3" min="-2" pref="616" max="-2" attributes="0"/>
@@ -771,9 +774,11 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" pref="381" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" pref="379" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Component id="txtIdProveedor" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnGuardarProveedor" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnEliminarProveedor" min="-2" max="-2" attributes="0"/>
@@ -897,6 +902,8 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="NUEVO"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtIdProveedor">
             </Component>
           </SubComponents>
         </Container>
@@ -1064,7 +1071,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable4">
+                <Component class="javax.swing.JTable" name="TableProducto">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="5" rowCount="0">
