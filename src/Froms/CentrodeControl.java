@@ -4,17 +4,74 @@
  */
 package Froms;
 
+import Aplicacion.Proveedor;
+import ControladorBS.CBSLProveedor;
+import javax.swing.JOptionPane;
+import Aplicacion.CLIENTES;
+import ControladorBS.CBSLClientes;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Vinz
  */
 public class CentrodeControl extends javax.swing.JFrame {
-
-    /**
-     * Creates new form CentrodeControl
-     */
+    //Creamos los objetos que vamos a usar 
+    CLIENTES CLI = new CLIENTES();
+    CBSLClientes cbsclientes = new CBSLClientes();
+    //Aquí defines un objeto modelo de tipo DefaultTableModel, que es una clase en Java que representa el modelo de datos para una tabla en una interfaz gráfica
+    DefaultTableModel modelo = new  DefaultTableModel();
+    //----------------------------------------------------------------------------------------------------------
+    //Creamos un metodo para listar clientes de la clase CBSClientes listarClientes 
+    public void ListarClientes(){
+        //Llamamos al metodo de 
+       List <CLIENTES> listaClient = cbsclientes.ListarClientes();
+       //Asignas el modelo de la tabla TableCliente a la variable modelo
+       modelo = (DefaultTableModel) this.TableCliente.getModel();
+       Object[] ob = new Object[5];
+       //aquí creas un array de objetos (ob) de tamaño 5, que contendrá la información de cada cliente
+       //luego, inicias un bucle para recorrer cada cliente en listaClient
+       for(int i= 0; i<listaClient.size(); i++){
+           ob[0] = listaClient.get(i).getId();
+           ob[1] = listaClient.get(i).getNombre();
+           ob[2] = listaClient.get(i).getTelefono();
+           ob[3] = listaClient.get(i).getDireccion();
+           ob[4] = listaClient.get(i).getDni();
+        //Agregar Fila a la Tabla  
+        modelo.addRow(ob); 
+       }
+       //Actualizar la Tabla
+       TableCliente.setModel(modelo);  
+    }
+    //----------------------------------------------------------------------------------------------------------
+    //Creamos un metodo para limpiar cada vez que demos en el boton cliente 
+    public void LimpiarTable(){
+        for(int i= 0; i <modelo.getRowCount(); i++){
+           modelo.removeRow(i);
+           i= i-1;
+       }
+    }
+    //----------------------------------------------------------------------------------------------------------
+   //Metodo para limpiar los espacios 
+    public void LimpiarEspacio(){
+    this.txtIdCliente.setText("");
+        this.txtDNICliente.setText("");
+        this.txtNombreCliente.setText("");
+        this.txtDireccionCliente.setText("");
+        this.txtTelefonoCliente.setText("");
+        }
+    //----------------------------------------------------------------------------------------------------------
+    
+    Proveedor pr= new Proveedor();
+    CBSLProveedor pro= new CBSLProveedor();
+    
     public CentrodeControl() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.txtIdCliente.setVisible(false);
+        
     }
 
     /**
@@ -80,7 +137,7 @@ public class CentrodeControl extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        txRuctProveedor = new javax.swing.JTextField();
+        txtRucProveedor = new javax.swing.JTextField();
         txtNombreProveedor = new javax.swing.JTextField();
         txtTelefonoProveedor = new javax.swing.JTextField();
         txtDireccionProveedor = new javax.swing.JTextField();
@@ -146,6 +203,11 @@ public class CentrodeControl extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/iconPersona.png"))); // NOI18N
         jButton7.setText("Clientes");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(153, 153, 0));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -386,28 +448,54 @@ public class CentrodeControl extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Telefono", "DIRECCION", "DNI"
+                "ID", "Nombre", "Telefono", "DIRECCION", "DNI"
             }
         ));
+        TableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableClienteMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TableCliente);
         if (TableCliente.getColumnModel().getColumnCount() > 0) {
-            TableCliente.getColumnModel().getColumn(0).setPreferredWidth(100);
-            TableCliente.getColumnModel().getColumn(1).setPreferredWidth(50);
-            TableCliente.getColumnModel().getColumn(2).setPreferredWidth(80);
-            TableCliente.getColumnModel().getColumn(3).setPreferredWidth(50);
+            TableCliente.getColumnModel().getColumn(0).setPreferredWidth(5);
+            TableCliente.getColumnModel().getColumn(1).setPreferredWidth(100);
+            TableCliente.getColumnModel().getColumn(2).setPreferredWidth(50);
+            TableCliente.getColumnModel().getColumn(3).setPreferredWidth(80);
+            TableCliente.getColumnModel().getColumn(4).setPreferredWidth(50);
         }
 
         btnGuardarCliente.setText("Guardar");
         btnGuardarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarClienteActionPerformed(evt);
+            }
+        });
 
         btnEliminarCliente.setText("Eliminar");
         btnEliminarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarClienteActionPerformed(evt);
+            }
+        });
 
         btnActualizarCliente.setText("Actualizar");
         btnActualizarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarClienteActionPerformed(evt);
+            }
+        });
 
         btnNuevoCliente.setText("Nuevo");
         btnNuevoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -495,6 +583,11 @@ public class CentrodeControl extends javax.swing.JFrame {
                 "RUC", "Nombre", "Telefono", "Direccion "
             }
         ));
+        TableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableProveedorMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(TableProveedor);
         if (TableProveedor.getColumnModel().getColumnCount() > 0) {
             TableProveedor.getColumnModel().getColumn(0).setPreferredWidth(40);
@@ -504,8 +597,18 @@ public class CentrodeControl extends javax.swing.JFrame {
         }
 
         btnGuardarProveedor.setText("GUARDAR");
+        btnGuardarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarProveedorActionPerformed(evt);
+            }
+        });
 
         btnEliminarProveedor.setText("ELIMINAR");
+        btnEliminarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProveedorActionPerformed(evt);
+            }
+        });
 
         btnActualizarProveedor.setText("ACTUALIZAR");
 
@@ -531,7 +634,7 @@ public class CentrodeControl extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txRuctProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtRucProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -556,7 +659,7 @@ public class CentrodeControl extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
-                    .addComponent(txRuctProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRucProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefonoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDireccionProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -857,6 +960,131 @@ public class CentrodeControl extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
+        // TODO add your handling code here:
+        if (!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"" .equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText())){
+            pr.setRuc(Integer.parseInt(txtRucProveedor.getText()));
+            pr.setNombre(txtNombreProveedor.getText());
+            pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
+            pr.setDireccion(txtDireccionProveedor.getText());
+            pro.RegistrarProveedor(pr);
+        }else{
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarProveedorActionPerformed
+
+    private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
+        // TODO add your handling code here:
+        int fila = TableProveedor.rowAtPoint(evt.getPoint());
+        
+        txtIdProveedor.setText(TableProveedor.getValueAt(ERROR, 0).toString());
+        txtRucProveedor.setText(TableProveedor.getValueAt(ERROR, 1).toString());
+        txtNombreProveedor.setText(TableProveedor.getValueAt(ERROR, 2).toString());
+        txtTelefonoProveedor.setText(TableProveedor.getValueAt(ERROR, 3).toString());
+        txtDireccionProveedor.setText(TableProveedor.getValueAt(ERROR, 4).toString());
+        
+    }//GEN-LAST:event_TableProveedorMouseClicked
+
+    private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
+        // TODO add your handling code here:
+        if (!"".equals(txtRucProveedor.getText())){
+            int pregunta=JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar");
+            if(pregunta ==0){
+                int ruc= Integer.parseInt(txtRucProveedor.getText());
+                pro.EliminarProveedor(ruc);
+       
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+    }//GEN-LAST:event_btnEliminarProveedorActionPerformed
+
+    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(this.txtDNICliente.getText()) && !"".equals(this.txtNombreCliente.getText()) &&  !"".equals(this.txtTelefonoCliente.getText()) && !"".equals(this.txtDireccionCliente.getText())){
+         //Todos los campos deben deben estar completados para registrar al cliente
+         
+         //Almacenamos las variables del from que se ingreso 
+         CLI.setNombre(this.txtNombreCliente.getText());
+         CLI.setDireccion(this.txtDireccionCliente.getText());
+         CLI.setTelefono(Integer.parseInt(this.txtTelefonoCliente.getText()));
+         CLI.setDni(Integer.parseInt(this.txtDNICliente.getText()));
+         //Llamamos al metodo registrar cliente que esta en la clase CBSClientes y le pasamos el objeto CLI DE LA CLASE CLIENTES
+         cbsclientes.RegistrarClientes(CLI);
+         this.LimpiarTable();
+         this.ListarClientes();
+         //MOSTRAMOS UN MENSAJE DE QUE EL CLIENTE SE REGISTRO CORRECTAMENTE
+         JOptionPane.showMessageDialog(null, "Se registro corrrectamente el cliente"); 
+      }  else {
+         JOptionPane.showMessageDialog(null, "Hubo un error en registro, verifique que todos los datos esten completos");
+      }     
+    }//GEN-LAST:event_btnGuardarClienteActionPerformed
+
+    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(this.txtIdCliente.getText())){
+           //JOption que va preguntar si desea eliminar o no
+           int pregunta = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar");
+           if(pregunta== 0){
+               int id = Integer.parseInt(this.txtIdCliente.getText());
+               //Llamamos al metodo cbsclients
+               this.cbsclientes.EliminarClientes(id);
+               //Limpieamos y mostramos la lista
+               this.LimpiarTable();
+               this.ListarClientes();
+               this.LimpiarEspacio();
+           }
+        }
+    }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void btnActualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarClienteActionPerformed
+        // TODO add your handling code here:
+        if("".equals(this.txtIdCliente.getText())){
+        JOptionPane.showMessageDialog(null, "Seleccione la fila a actualizar los datos");
+        }else{ 
+           //mandamos todos los elementos a modificar 
+           if(!"".equals(this.txtDNICliente.getText()) && !"".equals(this.txtNombreCliente.getText()) &&  !"".equals(this.txtTelefonoCliente.getText()) && !"".equals(this.txtDireccionCliente.getText())){
+            CLI.setNombre(this.txtNombreCliente.getText());
+            CLI.setTelefono(Integer.parseInt(this.txtTelefonoCliente.getText()));
+            CLI.setDireccion(this.txtDireccionCliente.getText());
+            CLI.setDni(Integer.parseInt(this.txtDNICliente.getText()));
+            CLI.setId(Integer.parseInt(this.txtIdCliente.getText()));
+           //Llamamos al metodo de actualizar
+           this.cbsclientes.ActualizarCliente(CLI); 
+           this.LimpiarTable();
+           this.LimpiarEspacio();
+           this.ListarClientes(); 
+           }else{
+           JOptionPane.showMessageDialog(null, "Error al actualizar los datos, verificar que todos los campos este completados");
+           }
+        }
+        
+    }//GEN-LAST:event_btnActualizarClienteActionPerformed
+
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+        // TODO add your handling code here:
+        this.LimpiarEspacio();
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       // TODO add your handling code here:
+       this.LimpiarTable();
+       this.ListarClientes(); //Llamamos al metodo que creamos en el from de listar para la tabla
+       //Con esto al presionar el boton de Clientes se va mostrar el panel de Clientes con la lista de clientes que se encuentren por el metodo de ListarClientes
+       jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void TableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClienteMouseClicked
+        // TODO add your handling code here:
+        //EVENS MOUSE CLICKED, AL SELECCIONAR UNA FILA SE DEBE MOSTAR EN LOS CASILLEROS LOS DATOS 
+       int fila = this.TableCliente.rowAtPoint(evt.getPoint());
+      this.txtIdCliente.setText(this.TableCliente.getValueAt(fila, 0).toString());
+      this.txtNombreCliente.setText(this.TableCliente.getValueAt(fila, 1).toString());
+      this.txtTelefonoCliente.setText(this.TableCliente.getValueAt(fila, 2).toString());
+      this.txtDireccionCliente.setText(this.TableCliente.getValueAt(fila, 3).toString());
+      this.txtDNICliente.setText(this.TableCliente.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_TableClienteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -965,7 +1193,6 @@ public class CentrodeControl extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
-    private javax.swing.JTextField txRuctProveedor;
     private javax.swing.JTextField txtCantidadProducto;
     private javax.swing.JTextField txtCantidadVenta;
     private javax.swing.JTextField txtCodigoProducto;
@@ -987,6 +1214,7 @@ public class CentrodeControl extends javax.swing.JFrame {
     private javax.swing.JButton txtPdfInfo;
     private javax.swing.JTextField txtPrecioProducto;
     private javax.swing.JTextField txtPrecioVenta;
+    private javax.swing.JTextField txtRucProveedor;
     private javax.swing.JTextField txtStockVenta;
     private javax.swing.JTextField txtTelefClienteVenta;
     private javax.swing.JTextField txtTelefonoCliente;
