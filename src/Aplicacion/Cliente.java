@@ -1,16 +1,24 @@
 
 package Aplicacion;
 
-/**
- *
- * @author Vinz
- */
-public class CLIENTES {
+public class Cliente {
+    
     private int id;
     private int dni;
     private int telefono;
     private String direccion;
     private String nombre;
+    
+    public Cliente(){
+    }
+
+    public Cliente(int id, int dni, int telefono, String direccion, String nombre) {
+        this.id = id;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.nombre = nombre;
+    }
 
     public int getId() {
         return id;
@@ -51,18 +59,7 @@ public class CLIENTES {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public CLIENTES() {
-    }
-
-    public CLIENTES(int id, int dni, int telefono, String direccion, String nombre) {
-        this.id = id;
-        this.dni = dni;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.nombre = nombre;
-    }
     
- 
+    
     
 }

@@ -1,6 +1,6 @@
 package ControladorBS;
 
-import Aplicacion.CLIENTES;
+import Aplicacion.Cliente;
 import Conexion.conexion;
 
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ public class CBSLClientes {
     conexion cn = new conexion();
 
     //Metodo para registrar los clientes, si todo va bien devulve tru y si hay algun erro devuelve false y muestra un mensaje de error 
-    public boolean RegistrarClientes(CLIENTES CLI) {
+    public boolean RegistrarClientes(Cliente CLI) {
         //La consulta y ? son los parametros que se daran mas adelante 
         String Consultasql = "INSERT INTO clientes(Nombre, Telefono, Dirección, dni) VALUES(?,?,?,?)";
         try {
@@ -54,7 +54,7 @@ public class CBSLClientes {
 
     //METODO PARA LISTAR CLIENTES 
     public List ListarClientes() {
-        List<CLIENTES> listaClient = new ArrayList();
+        List<Cliente> listaClient = new ArrayList();
         String Consultasql = "SELECT * FROM clientes";
         try {
             //Conexion  
@@ -65,7 +65,7 @@ public class CBSLClientes {
             r = p.executeQuery();
             //Recorremos los Resultados:
             while (r.next()) {
-                CLIENTES CLI = new CLIENTES();
+                Cliente CLI = new Cliente();
                 //Los datos recuperados de la tabla de la base de datos se almacenan eN LOs aTRIBUTOS DE LA CLASE CLIENTES
                 CLI.setId(r.getInt("id"));
                 CLI.setNombre(r.getString("Nombre"));
@@ -89,7 +89,6 @@ public class CBSLClientes {
         try {
             //Preparacion de la consulta
             p = con.prepareStatement(Consultasql);
-
             //se le pasa el argumento
             p.setInt(1, id);
             //se ejecuta la consulta 
@@ -108,7 +107,7 @@ public class CBSLClientes {
     }
 
     //METODO PARA ACTUALIZAR LOS DATOS DEL CLIENTE 
-    public boolean ActualizarCliente(CLIENTES CLI) {
+    public boolean ActualizarCliente(Cliente CLI) {
         String Consultasql = "UPDATE clientes SET Nombre=?, Telefono=?, Dirección=?, dni=? WHERE id=?";
         try {
             p = con.prepareStatement(Consultasql);

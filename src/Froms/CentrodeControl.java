@@ -3,11 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Froms;
-
+import Aplicacion.Cliente;
 import Aplicacion.Proveedor;
 import ControladorBS.CBSLProveedor;
-import javax.swing.JOptionPane;
-import Aplicacion.CLIENTES;
 import ControladorBS.CBSLClientes;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,15 +17,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CentrodeControl extends javax.swing.JFrame {
     //Creamos los objetos que vamos a usar 
-    CLIENTES CLI = new CLIENTES();
+    Cliente CLI = new Cliente();
     CBSLClientes cbsclientes = new CBSLClientes();
+    Proveedor pr= new Proveedor();
+    CBSLProveedor pro= new CBSLProveedor();
     //Aquí defines un objeto modelo de tipo DefaultTableModel, que es una clase en Java que representa el modelo de datos para una tabla en una interfaz gráfica
     DefaultTableModel modelo = new  DefaultTableModel();
     //----------------------------------------------------------------------------------------------------------
     //Creamos un metodo para listar clientes de la clase CBSClientes listarClientes 
     public void ListarClientes(){
         //Llamamos al metodo de 
-       List <CLIENTES> listaClient = cbsclientes.ListarClientes();
+       List <Cliente> listaClient = cbsclientes.ListarClientes();
        //Asignas el modelo de la tabla TableCliente a la variable modelo
        modelo = (DefaultTableModel) this.TableCliente.getModel();
        Object[] ob = new Object[5];
@@ -46,6 +46,29 @@ public class CentrodeControl extends javax.swing.JFrame {
        TableCliente.setModel(modelo);  
     }
     //----------------------------------------------------------------------------------------------------------
+    
+    //Creamos un metodo para listar clientes de la clase CBSLProveedor listarProveedor
+    public void ListarProveedor(){
+        //Llamamos al metodo de 
+       List <Proveedor> listaPro= pro.ListarProveedor();
+       //Asignas el modelo de la tabla TableCliente a la variable modelo
+       modelo = (DefaultTableModel) this.TableProveedor.getModel();
+       Object[] ob = new Object[5];
+       //aquí creas un array de objetos (ob) de tamaño 5, que contendrá la información de cada cliente
+       //luego, inicias un bucle para recorrer cada cliente en listaClient
+       for(int i= 0; i<listaPro.size(); i++){
+           ob[0] = listaPro.get(i).getId();
+           ob[1] = listaPro.get(i).getRuc();
+           ob[2] = listaPro.get(i).getNombre();
+           ob[3] = listaPro.get(i).getTelefono();
+           ob[4] = listaPro.get(i).getDireccion();
+        //Agregar Fila a la Tabla  
+        modelo.addRow(ob); 
+       }
+       //Actualizar la Tabla
+       TableProveedor.setModel(modelo);  
+    }
+    //----------------------------------------------------------------------------------------------------------
     //Creamos un metodo para limpiar cada vez que demos en el boton cliente 
     public void LimpiarTable(){
         for(int i= 0; i <modelo.getRowCount(); i++){
@@ -56,17 +79,23 @@ public class CentrodeControl extends javax.swing.JFrame {
     //----------------------------------------------------------------------------------------------------------
    //Metodo para limpiar los espacios 
     public void LimpiarEspacio(){
-    this.txtIdCliente.setText("");
+        this.txtIdCliente.setText("");
         this.txtDNICliente.setText("");
         this.txtNombreCliente.setText("");
         this.txtDireccionCliente.setText("");
         this.txtTelefonoCliente.setText("");
         }
     //----------------------------------------------------------------------------------------------------------
-    
-    Proveedor pr= new Proveedor();
-    CBSLProveedor pro= new CBSLProveedor();
-    
+
+    //Metodo para limpiar los espacios 
+    public void LimpiarProveedor(){
+        this.txtIdProveedor.setText("");
+        this.txtRucProveedor.setText("");
+        this.txtNombreProveedor.setText("");
+        this.txtTelefonoProveedor.setText("");
+        this.txtDireccionProveedor.setText("");
+        }
+    //-----------------------------------------------------------------------------------------------------------
     public CentrodeControl() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -223,6 +252,11 @@ public class CentrodeControl extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/iconProvee.png"))); // NOI18N
         jButton10.setText("Proveedores");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setBackground(new java.awt.Color(153, 153, 0));
         jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -580,7 +614,7 @@ public class CentrodeControl extends javax.swing.JFrame {
 
             },
             new String [] {
-                "RUC", "Nombre", "Telefono", "Direccion "
+                "ID", "RUC", "Nombre", "Telefono", "Direccion "
             }
         ));
         TableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -590,10 +624,11 @@ public class CentrodeControl extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(TableProveedor);
         if (TableProveedor.getColumnModel().getColumnCount() > 0) {
-            TableProveedor.getColumnModel().getColumn(0).setPreferredWidth(40);
-            TableProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
-            TableProveedor.getColumnModel().getColumn(2).setPreferredWidth(50);
-            TableProveedor.getColumnModel().getColumn(3).setPreferredWidth(80);
+            TableProveedor.getColumnModel().getColumn(0).setPreferredWidth(5);
+            TableProveedor.getColumnModel().getColumn(1).setPreferredWidth(40);
+            TableProveedor.getColumnModel().getColumn(2).setPreferredWidth(100);
+            TableProveedor.getColumnModel().getColumn(3).setPreferredWidth(50);
+            TableProveedor.getColumnModel().getColumn(4).setPreferredWidth(80);
         }
 
         btnGuardarProveedor.setText("GUARDAR");
@@ -611,8 +646,18 @@ public class CentrodeControl extends javax.swing.JFrame {
         });
 
         btnActualizarProveedor.setText("ACTUALIZAR");
+        btnActualizarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarProveedorActionPerformed(evt);
+            }
+        });
 
         btnNuevoProveedor.setText("NUEVO");
+        btnNuevoProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoProveedorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -674,7 +719,7 @@ public class CentrodeControl extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminarProveedor)
                         .addGap(18, 18, 18)
-                        .addComponent(btnActualizarProveedor)
+                        .addComponent(btnActualizarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevoProveedor)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -962,37 +1007,51 @@ public class CentrodeControl extends javax.swing.JFrame {
 
     private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
         // TODO add your handling code here:
+        /*verificar que los campos no esten vacio, si es diferente vacio con equals el campo txtfield 
+        para obtener el valor es getText*/
+        
         if (!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"" .equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText())){
-            pr.setRuc(Integer.parseInt(txtRucProveedor.getText()));
-            pr.setNombre(txtNombreProveedor.getText());
+            pr.setRuc(Integer.parseInt(txtRucProveedor.getText())); //como es un texto se hace un parseInt
+            pr.setNombre(txtNombreProveedor.getText()); 
             pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
             pr.setDireccion(txtDireccionProveedor.getText());
+            //Llamamos al metodo registrar proveedor que esta en la clase CBSLProveedor y le pasamos el objeto pr de la clase Proveedor
             pro.RegistrarProveedor(pr);
+            
+            this.LimpiarTable();
+            this.ListarProveedor();
+            LimpiarProveedor();  
+            JOptionPane.showMessageDialog(null, "Se registro corrrectamente"); 
         }else{
-            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            JOptionPane.showMessageDialog(null, "Hubo un error en registro, verifique que todos los datos esten completos"); //si estan vacios mandamos un mesaje
         }
+        //JOptionPane.showMessageDialog(null, "Hubo un error en registro, verifique que todos los datos esten completos");
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
 
     private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
         // TODO add your handling code here:
+        //los datos para que este en el txtField
         int fila = TableProveedor.rowAtPoint(evt.getPoint());
-        
-        txtIdProveedor.setText(TableProveedor.getValueAt(ERROR, 0).toString());
-        txtRucProveedor.setText(TableProveedor.getValueAt(ERROR, 1).toString());
-        txtNombreProveedor.setText(TableProveedor.getValueAt(ERROR, 2).toString());
-        txtTelefonoProveedor.setText(TableProveedor.getValueAt(ERROR, 3).toString());
-        txtDireccionProveedor.setText(TableProveedor.getValueAt(ERROR, 4).toString());
+        txtIdProveedor.setText(TableProveedor.getValueAt(fila, 0).toString());
+        txtRucProveedor.setText(TableProveedor.getValueAt(fila, 1).toString());
+        txtNombreProveedor.setText(TableProveedor.getValueAt(fila, 2).toString());
+        txtTelefonoProveedor.setText(TableProveedor.getValueAt(fila, 3).toString());
+        txtDireccionProveedor.setText(TableProveedor.getValueAt(fila, 4).toString());
         
     }//GEN-LAST:event_TableProveedorMouseClicked
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         // TODO add your handling code here:
-        if (!"".equals(txtRucProveedor.getText())){
-            int pregunta=JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar");
+        //si la fila esta seleccionada
+        if (!"".equals(txtIdProveedor.getText())){
+            int pregunta = JOptionPane.showConfirmDialog (null, "Estas seguro de eliminar");
             if(pregunta ==0){
-                int ruc= Integer.parseInt(txtRucProveedor.getText());
-                pro.EliminarProveedor(ruc);
-       
+                int id = Integer.parseInt(txtIdProveedor.getText());
+                pro.EliminarProveedor(id);
+                LimpiarTable();
+                ListarProveedor();
+                LimpiarProveedor();
+                 
             }
         }else{
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
@@ -1050,7 +1109,7 @@ public class CentrodeControl extends javax.swing.JFrame {
             CLI.setDni(Integer.parseInt(this.txtDNICliente.getText()));
             CLI.setId(Integer.parseInt(this.txtIdCliente.getText()));
            //Llamamos al metodo de actualizar
-           this.cbsclientes.ActualizarCliente(CLI); 
+           this.cbsclientes.ActualizarCliente(CLI);
            this.LimpiarTable();
            this.LimpiarEspacio();
            this.ListarClientes(); 
@@ -1077,13 +1136,50 @@ public class CentrodeControl extends javax.swing.JFrame {
     private void TableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClienteMouseClicked
         // TODO add your handling code here:
         //EVENS MOUSE CLICKED, AL SELECCIONAR UNA FILA SE DEBE MOSTAR EN LOS CASILLEROS LOS DATOS 
-       int fila = this.TableCliente.rowAtPoint(evt.getPoint());
+      int fila = this.TableCliente.rowAtPoint(evt.getPoint());
       this.txtIdCliente.setText(this.TableCliente.getValueAt(fila, 0).toString());
       this.txtNombreCliente.setText(this.TableCliente.getValueAt(fila, 1).toString());
       this.txtTelefonoCliente.setText(this.TableCliente.getValueAt(fila, 2).toString());
       this.txtDireccionCliente.setText(this.TableCliente.getValueAt(fila, 3).toString());
       this.txtDNICliente.setText(this.TableCliente.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_TableClienteMouseClicked
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        LimpiarTable();
+        ListarProveedor();
+        jTabbedPane1.setSelectedIndex(2);
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void btnActualizarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProveedorActionPerformed
+        // TODO add your handling code here:
+        if("".equals(txtIdProveedor.getText())){
+        JOptionPane.showMessageDialog(null, "Seleccione la fila a actualizar los datos"); //si esta vacio o lleno
+        }else{ 
+           //mandamos todos los elementos a modificar 
+           if(!"".equals(txtRucProveedor.getText()) && !"".equals(txtNombreProveedor.getText()) &&  !"".equals(txtTelefonoProveedor.getText()) && !"".equals(txtDireccionProveedor.getText())){
+            
+            pr.setRuc(Integer.parseInt(txtRucProveedor.getText()));
+            pr.setNombre(txtNombreProveedor.getText());
+            pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
+            pr.setDireccion(txtDireccionProveedor.getText());
+            pr.setId(Integer.parseInt(txtIdProveedor.getText()));
+           //Llamamos al metodo de actualizar
+           pro.ModificarProveedor(pr);
+           LimpiarTable();
+           LimpiarProveedor();
+           ListarProveedor();
+           }else{
+           JOptionPane.showMessageDialog(null, "Error al actualizar los datos, verificar que todos los campos este completados");
+           }
+        }
+    }//GEN-LAST:event_btnActualizarProveedorActionPerformed
+
+    private void btnNuevoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProveedorActionPerformed
+        // TODO add your handling code here:
+            LimpiarProveedor();
+    }//GEN-LAST:event_btnNuevoProveedorActionPerformed
 
     /**
      * @param args the command line arguments
