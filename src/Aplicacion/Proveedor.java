@@ -1,6 +1,10 @@
 package Aplicacion;
 
 public class Proveedor {
+
+    public static void addItem(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     //Atributos del proveedor
